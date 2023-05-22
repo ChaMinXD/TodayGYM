@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/first" app:showAsAction="ifRoom" android:enabled="true"
+        android:icon="@drawable/icon_exercise" android:title="운동" />
+    <item android:id="@+id/second" app:showAsAction="ifRoom"
+        android:icon="@drawable/icon_routine" android:title="루틴" />
+    <item android:id="@+id/third" app:showAsAction="ifRoom"
+        android:enabled="true" android:icon="@drawable/icon_setting" android:title="설정" />
+</menu>
