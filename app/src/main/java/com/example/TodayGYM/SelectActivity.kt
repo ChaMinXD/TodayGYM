@@ -45,7 +45,9 @@ class SelectActivity : AppCompatActivity() {
         binding.exerciseBtn.setOnClickListener {
             val intent= Intent(this,MainActivity::class.java)
             type="유산소"
+            place="유산소"
             intent.putExtra("type",type)
+            intent.putExtra("place",place)
             startActivity(intent)
         }
         binding.backTextview.setOnClickListener {

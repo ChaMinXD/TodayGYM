@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <View
         android:id="@+id/list_view"
-        android:layout_width="286dp"
+        android:layout_width="350dp"
         android:layout_height="54dp"
         android:background="@drawable/shape_round"
         app:layout_constraintStart_toStartOf="parent"
@@ -15,7 +15,7 @@
         android:layout_marginEnd="37dp"/>
     <TextView
         android:id="@+id/list_textview"
-        android:layout_width="200dp"
+        android:layout_width="260dp"
         android:layout_height="30dp"
         android:text="운동이름"
         android:fontFamily="@font/jua"

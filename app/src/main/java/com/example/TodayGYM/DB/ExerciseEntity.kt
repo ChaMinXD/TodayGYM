@@ -9,7 +9,8 @@ data class ExerciseEntity(
     val ExName:String,
     val ExType:String,
     val ExExplain:String,
-    val ExSrc:Int
+    val ExSrc:Int,
+    val ExPlace:String
 )
 
 @Entity(tableName = "routine_list")

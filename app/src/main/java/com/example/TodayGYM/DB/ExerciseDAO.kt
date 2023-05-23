@@ -13,8 +13,8 @@ interface ExerciseDAO {
     @Query ("SELECT * FROM exercise_list WHERE ExName=:exName")
     fun getExercise(exName:String):List<ExerciseEntity>
 
-    @Query ("SELECT * FROM exercise_list WHERE ExType=:exType")
-    fun getList(exType:String):List<ExerciseEntity>
+    @Query ("SELECT * FROM exercise_list WHERE ExType=:exType AND ExPlace=:exPlace ")
+    fun getList(exType:String,exPlace:String):List<ExerciseEntity>
 
     @Insert(onConflict=OnConflictStrategy.REPLACE)
     fun insertData(exerciseEntity: ExerciseEntity)

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
 import com.example.TodayGYM.DB.ExerciseDatabase
 import com.example.TodayGYM.DB.ExerciseEntity
+import com.example.TodayGYM.DB.migration_1_2
 import com.example.TodayGYM.Exercise.ExerciseFragment
 import com.example.TodayGYM.Routine.RoutineFragment
 import com.example.TodayGYM.Setting.SettingFragment
@@ -25,7 +26,8 @@ class MainActivity : AppCompatActivity() {
         val selectIntent=intent
         val type=selectIntent.getStringExtra("type")
         val place=selectIntent.getStringExtra("place")
-        db= Room.databaseBuilder(this, ExerciseDatabase::class.java,"ExerciseDB").allowMainThreadQueries().build()
+        db= Room.databaseBuilder(this, ExerciseDatabase::class.java,"ExerciseDB").allowMainThreadQueries().addMigrations(
+            migration_1_2).build()
         loadTxt()  // SelectActivity 에서 할지 ?
 
 
@@ -38,6 +40,7 @@ class MainActivity : AppCompatActivity() {
                     val bundle=Bundle()
                     bundle.putString("type",type)
                     bundle.putString("place",place)
+                    bundle.putBoolean("check",false)
                     exerciseFragment.arguments=bundle
                     supportFragmentManager.beginTransaction().replace(R.id.fl_container,exerciseFragment).commit()
                 }
@@ -67,7 +70,7 @@ class MainActivity : AppCompatActivity() {
                     a= string.split("/")
                     Log.d("test",a.toString())
                     val iResId = resources.getIdentifier("@drawable/"+a[3], "drawable", this.getPackageName())
-                    val data=ExerciseEntity(a[0],a[1],a[2],iResId)
+                    val data=ExerciseEntity(a[0],a[1],a[2],iResId,a[4])
                     db.exerciseDao().insertData(data)
                 } else {
                     break
