@@ -1,6 +1,8 @@
 package com.example.TodayGYM.Exercise
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,9 +35,8 @@ class ExerciseFragment : Fragment() {
         type=arguments?.getString("type").toString()
         place=arguments?.getString("place").toString()
         binding.typePlaceTextview.text=type+" > "+place
-        var check=arguments?.getBoolean("check")
         var List=arguments?.getSerializable("routineList")
-        if(List!=null) {
+        if(List.toString()!="[]"&&List!=null) {
             var parse = List.toString().replace("[", "").replace("]", "").split(",")
             for (i in parse) {
                 routineList.add(i)
@@ -44,16 +45,17 @@ class ExerciseFragment : Fragment() {
 
         db= Room.databaseBuilder(requireContext(),ExerciseDatabase::class.java,"ExerciseDB").allowMainThreadQueries().build()
         init()
-//        if(check == true){
-//            var exName=arguments?.getString("exName")
-//            if (exName != null) {
-//                routineList.add(exName)
-//            }
-//            routineAdapter.notifyDataSetChanged()
-//        }
+
         return binding.root
     }
     fun init(){
+        binding.startBtn.setOnClickListener {
+            val intent= Intent(context,ExerciseActivity::class.java)
+            intent.putExtra("routinelist",routineList)
+            intent.putExtra("type",type)
+            intent.putExtra("place",place)
+            startActivity(intent)
+        }
         //listAdapter
         var exerciseList=ArrayList(db.exerciseDao().getList(type,place))
         listAdapter= ListAdapter(exerciseList)

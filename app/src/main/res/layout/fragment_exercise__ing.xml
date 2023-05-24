@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/exercise_imageview"
-        android:layout_width="210dp"
-        android:layout_height="150dp"
+        android:layout_width="250dp"
+        android:layout_height="200dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -77,5 +77,72 @@
         app:layout_constraintTop_toTopOf="@id/timer_view"
         app:layout_constraintBottom_toBottomOf="@id/timer_view"
         />
+    <ImageView
+        android:id="@+id/play_btn"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/icon_play_btn"
+        app:layout_constraintEnd_toStartOf="@id/pause_btn"
+        app:layout_constraintTop_toBottomOf="@id/timer_view"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="50dp"/>
+    <TextView
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:fontFamily="@font/jua"
+        android:text="운동 시작"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/play_btn"
+        app:layout_constraintEnd_toEndOf="@id/play_btn"
+        app:layout_constraintTop_toBottomOf="@id/play_btn"
+        />
+    <ImageView
+        android:id="@+id/pause_btn"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/icon_pause_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/timer_view"
+        android:layout_marginTop="20dp"
+        />
+    <TextView
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:fontFamily="@font/jua"
+        android:text="일시정지"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/pause_btn"
+        app:layout_constraintEnd_toEndOf="@id/pause_btn"
+        app:layout_constraintTop_toBottomOf="@id/pause_btn"
+        />
+
+    <ImageView
+        android:id="@+id/stop_btn"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/icon_stop_btn"
+        app:layout_constraintStart_toEndOf="@id/pause_btn"
+        app:layout_constraintTop_toBottomOf="@id/timer_view"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="50dp"/>
+    <TextView
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:fontFamily="@font/jua"
+        android:text="운동 완료"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/stop_btn"
+        app:layout_constraintEnd_toEndOf="@id/stop_btn"
+        app:layout_constraintTop_toBottomOf="@id/stop_btn"
+        />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
