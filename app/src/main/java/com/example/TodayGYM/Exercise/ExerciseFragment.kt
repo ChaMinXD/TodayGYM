@@ -54,6 +54,7 @@ class ExerciseFragment : Fragment() {
             intent.putExtra("routinelist",routineList)
             intent.putExtra("type",type)
             intent.putExtra("place",place)
+            intent.putExtra("index",0)
             startActivity(intent)
         }
         //listAdapter

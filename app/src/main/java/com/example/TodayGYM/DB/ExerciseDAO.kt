@@ -11,7 +11,7 @@ interface ExerciseDAO {
     fun getAll():List<ExerciseEntity>
 
     @Query ("SELECT * FROM exercise_list WHERE ExName=:exName")
-    fun getExercise(exName:String):List<ExerciseEntity>
+    fun getExercise(exName:String):ExerciseEntity
 
     @Query ("SELECT * FROM exercise_list WHERE ExType=:exType AND ExPlace=:exPlace ")
     fun getList(exType:String,exPlace:String):List<ExerciseEntity>

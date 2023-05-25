@@ -87,6 +87,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="50dp"/>
     <TextView
+        android:id="@+id/play_txt"
         android:layout_width="60dp"
         android:layout_height="30dp"
         android:fontFamily="@font/jua"
@@ -109,6 +110,7 @@
         android:layout_marginTop="20dp"
         />
     <TextView
+        android:id="@+id/pause_text"
         android:layout_width="60dp"
         android:layout_height="30dp"
         android:fontFamily="@font/jua"
@@ -131,6 +133,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="50dp"/>
     <TextView
+        android:id="@+id/stop_text"
         android:layout_width="60dp"
         android:layout_height="30dp"
         android:fontFamily="@font/jua"
@@ -142,6 +145,55 @@
         app:layout_constraintEnd_toEndOf="@id/stop_btn"
         app:layout_constraintTop_toBottomOf="@id/stop_btn"
         />
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/ing_group1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="list_textview,pause_btn,play_btn,stop_btn,play_txt,pause_text,stop_text"/>
+    <TextView
+        android:id="@+id/rest_textview"
+        android:layout_width="150dp"
+        android:layout_height="29dp"
+        android:background="@drawable/shape_round_gray"
+        android:fontFamily="@font/jua"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/exercise_imageview"
+        android:text=" 휴식 중 "
+        android:textSize="17sp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black"/>
+    <ImageView
+        android:id="@+id/rest_play_btn"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/icon_play_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/timer_view"
+        android:layout_marginTop="20dp"
+        />
+    <TextView
+        android:id="@+id/rest_play_txt"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:fontFamily="@font/jua"
+        android:text="운동 시작"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/rest_play_btn"
+        app:layout_constraintEnd_toEndOf="@id/rest_play_btn"
+        app:layout_constraintTop_toBottomOf="@id/rest_play_btn"
+        />
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/ing_group2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:constraint_referenced_ids="rest_play_btn,rest_play_txt,rest_textview"/>
 
 
 

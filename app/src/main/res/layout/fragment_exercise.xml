@@ -43,9 +43,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="280dp"
         app:layout_constraintTop_toBottomOf="@id/type_place_textview"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="10dp"/>
     <TextView
         android:id="@+id/list_textview"
         android:layout_width="150dp"
@@ -72,7 +72,7 @@
         android:src="@drawable/icon_exercise_start"
         app:layout_constraintEnd_toStartOf="@id/start_btn"
         app:layout_constraintTop_toBottomOf="@id/routine_recyclerview"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"/>
     <TextView
         android:id="@+id/start_btn"
@@ -86,7 +86,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/routine_recyclerview"
         android:text="운동 시작"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:textColor="@color/black"
         />
 
