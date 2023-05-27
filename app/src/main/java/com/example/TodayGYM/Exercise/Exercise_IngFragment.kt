@@ -1,21 +1,21 @@
 package com.example.TodayGYM.Exercise
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentManager
 import androidx.room.Room
 import com.example.TodayGYM.DB.ExerciseDatabase
+import com.example.TodayGYM.DB.migration_1_2
+import com.example.TodayGYM.DB.migration_2_3
+import com.example.TodayGYM.Dialog.SetDialog
+import com.example.TodayGYM.MainActivity
 import com.example.TodayGYM.R
-import com.example.TodayGYM.SetDialog
 import com.example.TodayGYM.databinding.FragmentExerciseIngBinding
 import java.util.*
 import kotlin.concurrent.timer
-import kotlin.properties.Delegates
 
 class Exercise_IngFragment : Fragment() {
     lateinit var binding:FragmentExerciseIngBinding
@@ -28,23 +28,29 @@ class Exercise_IngFragment : Fragment() {
     var laptime=ArrayList<Int>()
     var set=4
     var now_set=1
+    var send_time=0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         binding= FragmentExerciseIngBinding.inflate(inflater,container,false)
-        db= Room.databaseBuilder(requireContext(),ExerciseDatabase::class.java,"ExerciseDB").allowMainThreadQueries().build()
+        db= Room.databaseBuilder(requireContext(), ExerciseDatabase::class.java,"ExerciseDB").allowMainThreadQueries().addMigrations(
+            migration_1_2
+        ).addMigrations(migration_2_3).build()
 
-        showSetDialog()
+        val List=arguments?.getSerializable("routineList")
         routinename= arguments?.getString("routinename").toString()
-        var List=arguments?.getSerializable("routineList")
+
+        Log.d("IngName",routinename)
+
         if(List.toString()!="[]"&&List!=null) {
             var parse = List.toString().replace("[", "").replace("]", "").split(",")
             for (i in parse) {
                 routineList.add(i)
             }
         }
+        showSetDialog()
         init()
 
         return binding.root
@@ -59,7 +65,7 @@ class Exercise_IngFragment : Fragment() {
             pauseTimer()
         }
         binding.restPlayBtn.setOnClickListener {
-            resetTimer()
+            endTimer()
             binding.ingGroup1.visibility=View.VISIBLE
             binding.ingGroup2.visibility=View.INVISIBLE
         }
@@ -73,6 +79,18 @@ class Exercise_IngFragment : Fragment() {
                 now_set=1
                 if(index==routine_num){
                     //마지막 운동끝난경우
+                    for ( i in laptime){
+                        send_time+=i
+                    }
+                    val activity=activity as ExerciseActivity
+                    activity.setInvisible()
+                    var endFragment=Exercise_EndFragment()
+                    val bundle=Bundle()
+                    bundle.putString("routineName",routinename)
+                    bundle.putSerializable("routinelist",routineList)
+                    bundle.putInt("time",send_time)
+                    endFragment.arguments=bundle
+                    activity.supportFragmentManager.beginTransaction().replace(R.id.exercise_fragmentview,endFragment).commit()
 
                 }
                 else{
@@ -116,9 +134,15 @@ class Exercise_IngFragment : Fragment() {
         Log.d("laptime",laptime.toString())
         timerTask?.cancel()
     }
+    fun endTimer(){
+        time=0
+        binding.timerMin.text="00"
+        binding.timerSec.text="00"
+        timerTask?.cancel()
+    }
     fun showSetDialog(){
-        val setDialog=SetDialog()
-        setDialog.setListener=object :SetDialog.OnSetListener{
+        val setDialog= SetDialog()
+        setDialog.setListener=object : SetDialog.OnSetListener{
             override fun setBtnClicked() {
                 set=setDialog.set
                 Log.d("diaset",set.toString())

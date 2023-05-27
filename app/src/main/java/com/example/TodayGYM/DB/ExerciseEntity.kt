@@ -16,5 +16,7 @@ data class ExerciseEntity(
 @Entity(tableName = "routine_list")
 data class RoutineEntity(
     @PrimaryKey
-    val Routine:List<String>
-)
+    val Routine:List<String>,
+    val RoutineName:String
+
+    )

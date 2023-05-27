@@ -13,15 +13,16 @@ import com.example.TodayGYM.databinding.ActivityExerciseBinding
 class ExerciseActivity : AppCompatActivity() {
     lateinit var binding: ActivityExerciseBinding
     var routineList=ArrayList<String>()
-
+    lateinit var type:String
+    lateinit var place:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityExerciseBinding.inflate(layoutInflater)
-        val type=intent.getStringExtra("type")
-        val place=intent.getStringExtra("place")
-        val List=intent.getSerializableExtra("routinelist")
+        type= intent.getStringExtra("type").toString()
+        place= intent.getStringExtra("place").toString()
+        val List=intent.getSerializableExtra("routineList")
         val index=intent.getIntExtra("index",0)
-        var routinename:String
+        val routinename:String
         if(!isEmpty(intent.getStringExtra("routinename"))){
             routinename= intent.getStringExtra("routinename").toString()
             }
@@ -29,24 +30,26 @@ class ExerciseActivity : AppCompatActivity() {
             routinename= intent.getStringExtra("오늘의 루틴").toString()
         }
 
-        Log.d("index",index.toString())
+        Log.d("ActivityName",routinename)
+
         if(List.toString()!="[]"&&List!=null) {
             var parse = List.toString().replace("[", "").replace("]", "").split(",")
             for (i in parse) {
                 routineList.add(i)
             }
         }
+        Log.d("Acitivty",routineList.toString())
         binding.typePlaceTextview.text=type+" > "+place
         binding.exNameTextview.text=routineList[index]
         val fragment=Exercise_IngFragment()
         val bundle=Bundle()
-        bundle.putInt("index",index)
-        bundle.putSerializable("routineList",List)
+        bundle.putSerializable("routineList",routineList)
         bundle.putString("routinename",routinename)
+        fragment.arguments=bundle
         supportFragmentManager.beginTransaction().replace(R.id.exercise_fragmentview,fragment).commit()
+
+
         setContentView(binding.root)
-
-
     }
     fun setExname(a:String){
         binding.exNameTextview.text=a

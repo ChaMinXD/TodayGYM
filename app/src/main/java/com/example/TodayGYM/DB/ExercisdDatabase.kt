@@ -10,7 +10,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.TodayGYM.ListConverters
 
 @TypeConverters(ListConverters::class)
-@Database(entities = [ExerciseEntity::class,RoutineEntity::class], version = 2)
+@Database(entities = [ExerciseEntity::class,RoutineEntity::class], version = 3)
 abstract class ExerciseDatabase:RoomDatabase() {
     abstract  fun exerciseDao():ExerciseDAO
     abstract  fun routineDao():RoutineDAO
@@ -40,6 +40,13 @@ val migration_1_2 = object : Migration(1, 2) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL(
             "ALTER TABLE exercise_list Add COLUMN ExPlace TEXT NOT NULL DEFAULT ''"
+        )
+    }
+}
+val migration_2_3 = object : Migration(2, 3) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL(
+            "ALTER TABLE routine_list Add COLUMN RoutineName TEXT NOT NULL DEFAULT ''"
         )
     }
 }

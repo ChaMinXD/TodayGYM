@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
 import com.example.TodayGYM.DB.ExerciseDatabase
 import com.example.TodayGYM.DB.ExerciseEntity
+import com.example.TodayGYM.DB.migration_1_2
+import com.example.TodayGYM.DB.migration_2_3
 import com.example.TodayGYM.MainActivity
 import com.example.TodayGYM.R
 import com.example.TodayGYM.databinding.FragmentExerciseBinding
@@ -43,7 +45,9 @@ class ExerciseFragment : Fragment() {
             }
         }
 
-        db= Room.databaseBuilder(requireContext(),ExerciseDatabase::class.java,"ExerciseDB").allowMainThreadQueries().build()
+        db= Room.databaseBuilder(requireContext(), ExerciseDatabase::class.java,"ExerciseDB").allowMainThreadQueries().addMigrations(
+            migration_1_2
+        ).addMigrations(migration_2_3).build()
         init()
 
         return binding.root
@@ -51,10 +55,11 @@ class ExerciseFragment : Fragment() {
     fun init(){
         binding.startBtn.setOnClickListener {
             val intent= Intent(context,ExerciseActivity::class.java)
-            intent.putExtra("routinelist",routineList)
+            intent.putExtra("routineList",routineList)
             intent.putExtra("type",type)
             intent.putExtra("place",place)
             intent.putExtra("index",0)
+            intent.putExtra("routinename","오늘의 루틴")
             startActivity(intent)
         }
         //listAdapter

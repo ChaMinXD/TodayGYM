@@ -1,4 +1,4 @@
-package com.example.TodayGYM
+package com.example.TodayGYM.Dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,7 +17,7 @@ class SetDialog:DialogFragment() {
     interface OnSetListener{
         fun setBtnClicked()
     }
-    var setListener:OnSetListener?=null
+    var setListener: OnSetListener?=null
 
     override fun onCreateView(
         inflater: LayoutInflater,
