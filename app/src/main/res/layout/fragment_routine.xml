@@ -1,14 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Routine.RoutineFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/Exercise_Goal_Textview"
+        android:layout_width="332dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/shape_round"
+        android:fontFamily="@font/jua"
+        android:gravity="center"
+        android:text="목표를 입력해주세요"
+        android:maxEms="20"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    <TextView
+        android:layout_width="80dp"
+        android:layout_height="20dp"
+        android:id="@+id/routine_textview"
+        android:fontFamily="@font/jua"
+        android:text="나의 루틴"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Exercise_Goal_Textview"
+        android:layout_marginTop="15dp"
+
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/routine_recyclerview_1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="color/gray"
+        app:layout_constraintTop_toBottomOf="@id/routine_textview"
+        android:layout_marginTop="100dp"
+        android:padding="20dp"/>
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/routine_group1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="routine_recyclerview_1,routine_textview"/>
 
-</FrameLayout>
+    <TextView
+        android:layout_width="80dp"
+        android:layout_height="20dp"
+        android:id="@+id/routine_name_textview"
+        android:fontFamily="@font/jua"
+        android:text="루틴 이름 1"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Exercise_Goal_Textview"
+        android:layout_marginTop="15dp"
+
+        />
+    <ImageView
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:id="@+id/back_icon"
+        android:src="@drawable/icon_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Exercise_Goal_Textview"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="35dp"
+
+        />
+    <ImageView
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:id="@+id/start_icon"
+        android:src="@drawable/icon_routine_play"
+        app:layout_constraintStart_toEndOf="@id/routine_name_textview"
+        app:layout_constraintTop_toBottomOf="@id/Exercise_Goal_Textview"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="5dp"
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/routine_recyclerview_2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="color/gray"
+        app:layout_constraintTop_toBottomOf="@id/routine_textview"
+        android:layout_marginTop="100dp"
+        android:padding="20dp"/>
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/routine_group2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:constraint_referenced_ids="routine_recyclerview_2,routine_name_textview,back_icon,start_icon"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
