@@ -40,7 +40,6 @@ class Exercise_ExplainFragment : Fragment() {
         //List Data 형태에 맞게 변환 Serializable > ArrayLIst
         var List=arguments?.getSerializable("routineList")
         if (List.toString()!="[]") {
-            Log.d("LIST",List.toString())
             var parse=List.toString().replace("[","").replace("]","").trim().split(",")
             for(i in parse){
                 routineList.add(i.trim())

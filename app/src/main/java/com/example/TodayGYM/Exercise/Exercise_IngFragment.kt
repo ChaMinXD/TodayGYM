@@ -44,7 +44,6 @@ class Exercise_IngFragment : Fragment() {
         val List=arguments?.getSerializable("routineList")
         routinename= arguments?.getString("routinename").toString()
 
-        Log.d("IngName",routinename)
 
         if(List.toString()!="[]"&&List!=null) {
             var parse = List.toString().replace("[", "").replace("]", "").trim().split(",")
@@ -76,9 +75,7 @@ class Exercise_IngFragment : Fragment() {
             now_set++
             if(now_set>set){
                 var routine_num=routineList.size
-                Log.d("num",routine_num.toString())
                 index++
-                Log.d("index",index.toString())
                 now_set=1
                 if(index==routine_num){
                     //마지막 운동끝난경우
@@ -101,7 +98,6 @@ class Exercise_IngFragment : Fragment() {
                     //세트수 끝난경우
                     (activity as ExerciseActivity).setExname(routineList[index])
                     showSetDialog()
-                    Log.d("index",routineList[index])
                     var src=db.exerciseDao().getExercise(routineList[index]).ExSrc
                     binding.exerciseImageview.setImageResource(src)
 
@@ -138,7 +134,6 @@ class Exercise_IngFragment : Fragment() {
         time=0
         binding.timerMin.text="00"
         binding.timerSec.text="00"
-        Log.d("laptime",laptime.toString())
         timerTask?.cancel()
     }
     fun endTimer(){
@@ -152,7 +147,6 @@ class Exercise_IngFragment : Fragment() {
         setDialog.setListener=object : SetDialog.OnSetListener{
             override fun setBtnClicked() {
                 set=setDialog.set
-                Log.d("diaset",set.toString())
                 binding.listTextview.text=now_set.toString()+" / "+set.toString()+ " 세트"
                 setDialog.dismiss()
             }

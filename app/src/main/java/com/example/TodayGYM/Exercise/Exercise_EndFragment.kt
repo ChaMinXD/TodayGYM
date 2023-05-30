@@ -43,7 +43,6 @@ class Exercise_EndFragment : Fragment() {
         ).addMigrations(migration_2_3).build()
         routinename= arguments?.getString("routineName").toString()
         isRoutine= arguments?.getBoolean("isRoutine")!!
-        Log.d("EndName",routinename)
         val time=arguments?.getInt("time")
         var min= time?.div(60)
         var sec= time?.rem(60)

@@ -69,8 +69,6 @@ class MainActivity : AppCompatActivity() {
                     val iResId = resources.getIdentifier("@drawable/"+a[3], "drawable", this.getPackageName())
                     val data=ExerciseEntity(a[0],a[1],a[2],iResId,a[4])
                     db.exerciseDao().insertData(data)
-                    Log.d("db",db.exerciseDao().getAll().toString())
-                    Log.d("routdb",db.routineDao().getAll().toString())
 
                 } else {
                     break

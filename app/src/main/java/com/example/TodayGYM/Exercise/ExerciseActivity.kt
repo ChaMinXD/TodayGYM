@@ -32,7 +32,6 @@ class ExerciseActivity : AppCompatActivity() {
             routinename= intent.getStringExtra("오늘의 루틴").toString()
         }
 
-        Log.d("ActivityName",routinename)
 
         if(List.toString()!="[]"&&List!=null) {
             var parse = List.toString().replace("[", "").replace("]", "").split(",")
@@ -40,7 +39,6 @@ class ExerciseActivity : AppCompatActivity() {
                 routineList.add(i.trim())
             }
         }
-        Log.d("Acitivty",routineList.toString())
         binding.typePlaceTextview.text=type+" > "+place
         binding.exNameTextview.text=routineList[index]
         val fragment=Exercise_IngFragment()
