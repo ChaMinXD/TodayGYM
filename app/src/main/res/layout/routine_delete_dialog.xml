@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView
+            android:id="@+id/dialog_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="해당 루틴을 나만의 루틴에서 삭제할까요 ?"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="@font/jua"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/black"/>
+
+
+
+    <TextView
+            android:id="@+id/ok_btn"
+            android:background="@drawable/shape_round_edge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="네"
+            app:layout_constraintTop_toBottomOf="@id/dialog_textview"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/no_btn"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/jua"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            />
+    <TextView
+            android:id="@+id/no_btn"
+            android:background="@drawable/shape_round_edge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="아니오"
+            app:layout_constraintTop_toBottomOf="@id/dialog_textview"
+            app:layout_constraintStart_toEndOf="@id/ok_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/jua"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

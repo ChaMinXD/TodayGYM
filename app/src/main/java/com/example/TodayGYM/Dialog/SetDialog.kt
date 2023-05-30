@@ -8,10 +8,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.TodayGYM.databinding.SetDialogBinding
 
 class SetDialog:DialogFragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        isCancelable=true
-    }
+
     lateinit var binding:SetDialogBinding
     var set=4
     interface OnSetListener{

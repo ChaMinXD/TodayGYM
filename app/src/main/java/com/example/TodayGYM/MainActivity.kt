@@ -25,8 +25,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val selectIntent=intent
-        val type=selectIntent.getStringExtra("type")
-        val place=selectIntent.getStringExtra("place")
+
         db= Room.databaseBuilder(this, ExerciseDatabase::class.java,"ExerciseDB").allowMainThreadQueries().addMigrations(
             migration_1_2).addMigrations(migration_2_3).build()
         loadTxt()  // SelectActivity 에서 할지 ?
@@ -39,8 +38,6 @@ class MainActivity : AppCompatActivity() {
                     // 다른 프래그먼트 화면으로 이동하는 기능
                     val exerciseFragment = ExerciseFragment()
                     val bundle=Bundle()
-                    bundle.putString("type",type)
-                    bundle.putString("place",place)
                     bundle.putBoolean("check",false)
                     exerciseFragment.arguments=bundle
                     supportFragmentManager.beginTransaction().replace(R.id.fl_container,exerciseFragment).commit()
@@ -72,6 +69,9 @@ class MainActivity : AppCompatActivity() {
                     val iResId = resources.getIdentifier("@drawable/"+a[3], "drawable", this.getPackageName())
                     val data=ExerciseEntity(a[0],a[1],a[2],iResId,a[4])
                     db.exerciseDao().insertData(data)
+                    Log.d("db",db.exerciseDao().getAll().toString())
+                    Log.d("routdb",db.routineDao().getAll().toString())
+
                 } else {
                     break
                 }

@@ -68,7 +68,7 @@
         android:id="@+id/exercise_explain_textview"
         android:padding="5dp"
         android:layout_width="280dp"
-        android:layout_height="200dp"
+        android:layout_height="180dp"
         android:layout_marginTop="15dp"
         android:fontFamily="@font/jua"
         android:text="운동설명"
@@ -81,6 +81,7 @@
         app:layout_constraintTop_toBottomOf="@id/exercise_imageview"
         />
     <ImageView
+
         android:id="@+id/back_btn"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -90,6 +91,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginStart="90dp"/>
     <TextView
+            android:id="@+id/back_btn_text"
         android:layout_width="60dp"
         android:layout_height="30dp"
         android:fontFamily="@font/jua"
@@ -112,6 +114,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="90dp"/>
     <TextView
+            android:id="@+id/plus_btn_text"
         android:layout_width="80dp"
         android:layout_height="30dp"
         android:fontFamily="@font/jua"
@@ -123,5 +126,40 @@
         app:layout_constraintEnd_toEndOf="@id/plus_btn"
         app:layout_constraintTop_toBottomOf="@id/plus_btn"
         />
+    <ImageView
+            android:id="@+id/back_btn2"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/icon_back_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/exercise_explain_textview"
+            android:layout_marginTop="10dp"
+            />
+    <TextView
+            android:id="@+id/back_btn2_text"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:fontFamily="@font/jua"
+            android:text="돌아가기"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/back_btn2"
+            app:layout_constraintEnd_toEndOf="@id/back_btn2"
+            app:layout_constraintTop_toBottomOf="@id/back_btn2"
+            />
+    <androidx.constraintlayout.widget.Group
+            android:id="@+id/group1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:constraint_referenced_ids="back_btn,back_btn_text,plus_btn,plus_btn_text"/>
+    <androidx.constraintlayout.widget.Group
+            android:id="@+id/group2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:constraint_referenced_ids="back_btn2,back_btn2_text"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

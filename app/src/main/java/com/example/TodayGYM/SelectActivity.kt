@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.example.TodayGYM.Sharedprefs.App
 import com.example.TodayGYM.databinding.ActivitySelectBinding
 
 class SelectActivity : AppCompatActivity() {
@@ -46,8 +47,9 @@ class SelectActivity : AppCompatActivity() {
             val intent= Intent(this,MainActivity::class.java)
             type="유산소"
             place="유산소"
-            intent.putExtra("type",type)
-            intent.putExtra("place",place)
+            App.prefs.setString("type",type)
+            App.prefs.setString("place",place)
+
             startActivity(intent)
         }
         binding.backTextview.setOnClickListener {
@@ -56,16 +58,17 @@ class SelectActivity : AppCompatActivity() {
         }
         binding.healthBtn.setOnClickListener {
             place="헬스장"
+            App.prefs.setString("type",type)
+            App.prefs.setString("place",place)
             val intent=Intent(this,MainActivity::class.java)
-            intent.putExtra("type",type)
-            intent.putExtra("place",place)
+
             startActivity(intent)
         }
         binding.hometrainBtn.setOnClickListener {
             place="홈트레이닝"
+            App.prefs.setString("type",type)
+            App.prefs.setString("place",place)
             val intent=Intent(this,MainActivity::class.java)
-            intent.putExtra("type",type)
-            intent.putExtra("place",place)
             startActivity(intent)
         }
     }

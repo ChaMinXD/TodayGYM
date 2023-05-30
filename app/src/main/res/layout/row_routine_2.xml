@@ -15,7 +15,7 @@
         />
     <TextView
         android:id="@+id/routine_textview"
-        android:layout_width="240dp"
+        android:layout_width="280dp"
         android:layout_height="40dp"
         android:background="@drawable/shape_edge"
         android:text="루틴이름"
@@ -38,15 +38,6 @@
         app:layout_constraintStart_toEndOf="@id/routine_textview"
         app:layout_constraintTop_toTopOf="@id/routine_view"
         app:layout_constraintBottom_toBottomOf="@id/routine_view"/>
-    <ImageView
-        android:id="@+id/routine_del_btn"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:padding="5dp"
-        android:background="@drawable/shape_edge"
-        android:src="@drawable/icon_del_bnt"
-        app:layout_constraintStart_toEndOf="@id/routine_detail_btn"
-        app:layout_constraintTop_toTopOf="@id/routine_view"
-        app:layout_constraintBottom_toBottomOf="@id/routine_view"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

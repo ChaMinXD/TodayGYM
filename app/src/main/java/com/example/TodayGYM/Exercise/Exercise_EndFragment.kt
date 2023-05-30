@@ -13,20 +13,22 @@ import com.example.TodayGYM.DB.ExerciseDatabase
 import com.example.TodayGYM.DB.RoutineEntity
 import com.example.TodayGYM.DB.migration_1_2
 import com.example.TodayGYM.DB.migration_2_3
+import com.example.TodayGYM.Dialog.RoutineDelDialog
 import com.example.TodayGYM.Dialog.RoutineDialog
 import com.example.TodayGYM.Dialog.SetDialog
 import com.example.TodayGYM.MainActivity
 import com.example.TodayGYM.R
+import com.example.TodayGYM.Sharedprefs.App
 import com.example.TodayGYM.databinding.FragmentExerciseEndBinding
 import java.util.ArrayList
 
 
 class Exercise_EndFragment : Fragment() {
-    lateinit var routineName:String
     lateinit var binding:FragmentExerciseEndBinding
     lateinit var routine_db:ExerciseDatabase
     var routineList= ArrayList<String>()
     lateinit var routinename:String
+    var isRoutine=false
 
 
 
@@ -40,6 +42,7 @@ class Exercise_EndFragment : Fragment() {
             migration_1_2
         ).addMigrations(migration_2_3).build()
         routinename= arguments?.getString("routineName").toString()
+        isRoutine= arguments?.getBoolean("isRoutine")!!
         Log.d("EndName",routinename)
         val time=arguments?.getInt("time")
         var min= time?.div(60)
@@ -47,26 +50,36 @@ class Exercise_EndFragment : Fragment() {
         binding.timeTextview.text=min.toString()+"분 "+sec.toString()+"초 동안 \n 운동했어요 !"
         var List=arguments?.getSerializable("routinelist")
         if(List.toString()!="[]"&&List!=null) {
-            var parse = List.toString().replace("[", "").replace("]", "").split(",")
+            var parse = List.toString().replace("[", "").replace("]", "").trim().split(",")
             for (i in parse) {
-                routineList.add(i)
+                routineList.add(i.trim())
             }
         }
         init()
         return binding.root
     }
     fun init(){
+        val activity=activity as ExerciseActivity
+        activity.setVisible()
         binding.routinenameTextview.text=routinename
         binding.goodBtn.setOnClickListener {
-            showRoutineDialog()
-            routine_db.routineDao().insertData(RoutineEntity(routineList,routinename))
-            Log.d("routineDB",routine_db.routineDao().getAll().toString())
-
+            if(!isRoutine) {
+                showRoutineDialog()
+            }
+            else{
+                val intent= Intent(context,MainActivity::class.java)
+                startActivity(intent)
+            }
         }
         binding.badBtn.setOnClickListener {
-            //visible
-            val intent= Intent(context,MainActivity::class.java)
-            startActivity(intent)
+            if(isRoutine){
+                showRoutineDelDialog()
+            }
+            else{
+                val intent= Intent(context,MainActivity::class.java)
+                startActivity(intent)
+            }
+
         }
     }
 
@@ -74,17 +87,33 @@ class Exercise_EndFragment : Fragment() {
         val routineDialog= RoutineDialog()
         routineDialog.routineListener=object : RoutineDialog.OnRoutineListener{
             override fun setBtnClicked() {
-                routineName=routineDialog.routineName
+                routinename=routineDialog.routineName.trim()
+                Log.d("routineName",routineDialog.routineName)
                 routineDialog.dismiss()
-                //
+                routine_db.routineDao().insertData(RoutineEntity(routineList,routinename))
+                Log.d("routineDB",routine_db.routineDao().getAll().toString())
+
                 val intent= Intent(context,MainActivity::class.java)
-                intent.putExtra("type","유산소")
-                intent.putExtra("place","유산소")
                 startActivity(intent)
 
             }
         }
-        routineDialog.show(requireFragmentManager(),"SetDialog")
+        routineDialog.show(requireFragmentManager(),"routineDialog")
+    }
+    fun showRoutineDelDialog(){
+        val routineDelDialog=RoutineDelDialog()
+        routineDelDialog.routineDelListener=object :RoutineDelDialog.OnRoutineDelListener{
+            override fun okBtnClicked() {
+                routine_db.routineDao().deleteData(RoutineEntity(routineList,routinename))
+                routineDelDialog.dismiss()
+                val intent= Intent(context,MainActivity::class.java)
+                startActivity(intent)
+
+            }
+
+        }
+        routineDelDialog.show(requireFragmentManager(),"routineDelDialog")
+
     }
 
 }

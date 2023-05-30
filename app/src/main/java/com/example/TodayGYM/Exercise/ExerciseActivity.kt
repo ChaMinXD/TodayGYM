@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import com.example.TodayGYM.MainActivity
 import com.example.TodayGYM.R
+import com.example.TodayGYM.Sharedprefs.App
 import com.example.TodayGYM.databinding.ActivityExerciseBinding
 
 class ExerciseActivity : AppCompatActivity() {
@@ -18,11 +19,12 @@ class ExerciseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityExerciseBinding.inflate(layoutInflater)
-        type= intent.getStringExtra("type").toString()
-        place= intent.getStringExtra("place").toString()
+        type= App.prefs.getString("type","")
+        place= App.prefs.getString("place","")
         val List=intent.getSerializableExtra("routineList")
         val index=intent.getIntExtra("index",0)
         val routinename:String
+        val isRoutine=intent.getBooleanExtra("isRoutine",false)
         if(!isEmpty(intent.getStringExtra("routinename"))){
             routinename= intent.getStringExtra("routinename").toString()
             }
@@ -35,7 +37,7 @@ class ExerciseActivity : AppCompatActivity() {
         if(List.toString()!="[]"&&List!=null) {
             var parse = List.toString().replace("[", "").replace("]", "").split(",")
             for (i in parse) {
-                routineList.add(i)
+                routineList.add(i.trim())
             }
         }
         Log.d("Acitivty",routineList.toString())
@@ -45,6 +47,7 @@ class ExerciseActivity : AppCompatActivity() {
         val bundle=Bundle()
         bundle.putSerializable("routineList",routineList)
         bundle.putString("routinename",routinename)
+        bundle.putBoolean("isRoutine",isRoutine)
         fragment.arguments=bundle
         supportFragmentManager.beginTransaction().replace(R.id.exercise_fragmentview,fragment).commit()
 

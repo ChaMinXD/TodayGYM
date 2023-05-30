@@ -21,6 +21,7 @@ class Exercise_IngFragment : Fragment() {
     lateinit var binding:FragmentExerciseIngBinding
     lateinit var db: ExerciseDatabase
     lateinit var routinename:String
+    var isRoutine:Boolean = false
     private var time=0;
     private var timerTask: Timer?=null
     var index = 0
@@ -29,6 +30,7 @@ class Exercise_IngFragment : Fragment() {
     var set=4
     var now_set=1
     var send_time=0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,16 +40,16 @@ class Exercise_IngFragment : Fragment() {
         db= Room.databaseBuilder(requireContext(), ExerciseDatabase::class.java,"ExerciseDB").allowMainThreadQueries().addMigrations(
             migration_1_2
         ).addMigrations(migration_2_3).build()
-
+        isRoutine= arguments?.getBoolean("isRoutine")!!
         val List=arguments?.getSerializable("routineList")
         routinename= arguments?.getString("routinename").toString()
 
         Log.d("IngName",routinename)
 
         if(List.toString()!="[]"&&List!=null) {
-            var parse = List.toString().replace("[", "").replace("]", "").split(",")
+            var parse = List.toString().replace("[", "").replace("]", "").trim().split(",")
             for (i in parse) {
-                routineList.add(i)
+                routineList.add(i.trim())
             }
         }
         showSetDialog()
@@ -76,6 +78,7 @@ class Exercise_IngFragment : Fragment() {
                 var routine_num=routineList.size
                 Log.d("num",routine_num.toString())
                 index++
+                Log.d("index",index.toString())
                 now_set=1
                 if(index==routine_num){
                     //마지막 운동끝난경우
@@ -89,6 +92,7 @@ class Exercise_IngFragment : Fragment() {
                     bundle.putString("routineName",routinename)
                     bundle.putSerializable("routinelist",routineList)
                     bundle.putInt("time",send_time)
+                    bundle.putBoolean("isRoutine",isRoutine)
                     endFragment.arguments=bundle
                     activity.supportFragmentManager.beginTransaction().replace(R.id.exercise_fragmentview,endFragment).commit()
 
@@ -97,6 +101,9 @@ class Exercise_IngFragment : Fragment() {
                     //세트수 끝난경우
                     (activity as ExerciseActivity).setExname(routineList[index])
                     showSetDialog()
+                    Log.d("index",routineList[index])
+                    var src=db.exerciseDao().getExercise(routineList[index]).ExSrc
+                    binding.exerciseImageview.setImageResource(src)
 
                 }
             }

@@ -16,6 +16,7 @@ import com.example.TodayGYM.DB.migration_1_2
 import com.example.TodayGYM.DB.migration_2_3
 import com.example.TodayGYM.MainActivity
 import com.example.TodayGYM.R
+import com.example.TodayGYM.Sharedprefs.App
 import com.example.TodayGYM.databinding.FragmentExerciseBinding
 
 
@@ -34,14 +35,14 @@ class ExerciseFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding= FragmentExerciseBinding.inflate(inflater,container,false)
-        type=arguments?.getString("type").toString()
-        place=arguments?.getString("place").toString()
+        type= App.prefs.getString("type","")
+        place=App.prefs.getString("place","")
         binding.typePlaceTextview.text=type+" > "+place
         var List=arguments?.getSerializable("routineList")
         if(List.toString()!="[]"&&List!=null) {
-            var parse = List.toString().replace("[", "").replace("]", "").split(",")
+            var parse = List.toString().replace("[", "").replace("]", "").trim().split(",")
             for (i in parse) {
-                routineList.add(i)
+                routineList.add(i.trim())
             }
         }
 
@@ -56,10 +57,10 @@ class ExerciseFragment : Fragment() {
         binding.startBtn.setOnClickListener {
             val intent= Intent(context,ExerciseActivity::class.java)
             intent.putExtra("routineList",routineList)
-            intent.putExtra("type",type)
-            intent.putExtra("place",place)
             intent.putExtra("index",0)
             intent.putExtra("routinename","오늘의 루틴")
+            intent.putExtra("isRoutine",false)
+
             startActivity(intent)
         }
         //listAdapter
@@ -69,8 +70,9 @@ class ExerciseFragment : Fragment() {
             LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
         listAdapter.clickListener=object :ListAdapter.OnItemClickListener{
             override fun btnClicked(item: ExerciseEntity) {
-                routineList.add(item.ExName)
+                routineList.add(item.ExName.trim())
                 routineAdapter.notifyDataSetChanged()
+
             }
 
             override fun textClicked(item: ExerciseEntity) {
@@ -79,9 +81,8 @@ class ExerciseFragment : Fragment() {
                 bundle.putInt("exSrc",item.ExSrc)
                 bundle.putString("exExplain",item.ExExplain)
                 bundle.putString("exName",item.ExName)
-                bundle.putString("type",type)
-                bundle.putString("place",place)
                 bundle.putSerializable("routineList",routineList)
+                bundle.putBoolean("isRoutine",false)
                 exercise_explain_Fragment.arguments=bundle
                 val activity=activity as MainActivity
                 activity.supportFragmentManager.beginTransaction().replace(R.id.fl_container,exercise_explain_Fragment).commit()
