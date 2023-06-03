@@ -54,6 +54,8 @@ class ExerciseFragment : Fragment() {
         return binding.root
     }
     fun init(){
+        binding.ExerciseGoalTextview.text=App.prefs.getString("goal","목표를 입력하세요")
+
         binding.startBtn.setOnClickListener {
             val intent= Intent(context,ExerciseActivity::class.java)
             intent.putExtra("routineList",routineList)

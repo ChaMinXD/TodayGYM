@@ -109,7 +109,6 @@ class Exercise_EndFragment : Fragment() {
                 startActivity(intent)
 
             }
-
         }
         routineDelDialog.show(requireFragmentManager(),"routineDelDialog")
 

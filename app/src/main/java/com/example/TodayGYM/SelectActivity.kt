@@ -18,6 +18,8 @@ class SelectActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
     private fun init(){
+        binding.ExerciseGoalTextview.text=App.prefs.getString("goal","목표를 입력하세요")
+
         binding.exerciseArmBtn.setOnClickListener {
             binding.selectGroup1.visibility=View.GONE
             binding.selectGroup2.visibility=View.VISIBLE

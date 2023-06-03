@@ -21,6 +21,8 @@ class ExerciseActivity : AppCompatActivity() {
         binding= ActivityExerciseBinding.inflate(layoutInflater)
         type= App.prefs.getString("type","")
         place= App.prefs.getString("place","")
+        binding.ExerciseGoalTextview.text=App.prefs.getString("goal","목표를 입력하세요")
+
         val List=intent.getSerializableExtra("routineList")
         val index=intent.getIntExtra("index",0)
         val routinename:String

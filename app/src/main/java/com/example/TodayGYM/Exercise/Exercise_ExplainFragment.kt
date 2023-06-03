@@ -50,6 +50,8 @@ class Exercise_ExplainFragment : Fragment() {
         return binding.root
     }
     fun init(){
+        binding.ExerciseGoalTextview.text=App.prefs.getString("goal","목표를 입력하세요")
+
         val activity=activity as MainActivity
         binding.exerciseExplainTextview.movementMethod = ScrollingMovementMethod()
         binding.exerciseExplainTextview.text = exExplain.replace("\"","").replace("+","").replace("\\uF06C","*").replace("\\n", "\n").replace("\\t", "\t")

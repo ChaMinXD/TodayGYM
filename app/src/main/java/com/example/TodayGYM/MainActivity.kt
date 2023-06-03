@@ -1,8 +1,12 @@
 package com.example.TodayGYM
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.room.Room
 import com.example.TodayGYM.DB.ExerciseDatabase
 import com.example.TodayGYM.DB.ExerciseEntity
@@ -10,12 +14,15 @@ import com.example.TodayGYM.DB.migration_1_2
 import com.example.TodayGYM.DB.migration_2_3
 import com.example.TodayGYM.Exercise.ExerciseFragment
 import com.example.TodayGYM.Routine.RoutineFragment
+import com.example.TodayGYM.Setting.AlarmReceiver
 import com.example.TodayGYM.Setting.SettingFragment
+import com.example.TodayGYM.Sharedprefs.alarmManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -79,4 +86,5 @@ class MainActivity : AppCompatActivity() {
             e.printStackTrace()
         }
     }
+
 }

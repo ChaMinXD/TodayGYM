@@ -14,6 +14,7 @@ import com.example.TodayGYM.Exercise.ExerciseActivity
 import com.example.TodayGYM.Exercise.Exercise_ExplainFragment
 import com.example.TodayGYM.MainActivity
 import com.example.TodayGYM.R
+import com.example.TodayGYM.Sharedprefs.App
 import com.example.TodayGYM.databinding.FragmentRoutineBinding
 
 
@@ -40,6 +41,8 @@ class RoutineFragment : Fragment() {
     }
 
     fun init() {
+        binding.ExerciseGoalTextview.text= App.prefs.getString("goal","목표를 입력하세요")
+
         var routineEntitylist=db.routineDao().getAll()
         routine1Adapter= Routine1Adapter(routineEntitylist as ArrayList<RoutineEntity>)
         binding.routineRecyclerview1.layoutManager=
