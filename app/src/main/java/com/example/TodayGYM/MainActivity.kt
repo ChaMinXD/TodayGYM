@@ -16,7 +16,6 @@ import com.example.TodayGYM.Exercise.ExerciseFragment
 import com.example.TodayGYM.Routine.RoutineFragment
 import com.example.TodayGYM.Setting.AlarmReceiver
 import com.example.TodayGYM.Setting.SettingFragment
-import com.example.TodayGYM.Sharedprefs.alarmManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.io.BufferedReader
 import java.io.IOException

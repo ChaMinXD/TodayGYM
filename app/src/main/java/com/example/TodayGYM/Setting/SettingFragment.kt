@@ -25,23 +25,28 @@ import java.util.*
 internal var alarmManager: AlarmManager? = null
 class SettingFragment : Fragment() {
     lateinit var binding:FragmentSettingBinding
+    companion object {
+        const val REQUEST_CODE = 101
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        alarmManager=requireContext().getSystemService(ALARM_SERVICE) as AlarmManager?
         binding= FragmentSettingBinding.inflate(inflater,container,false)
-        init()
 
-        return binding.root
-    }
-    fun init(){
+        val alarmManager = binding.root.context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val pendingIntent = Intent(binding.root.context, AlarmReceiver::class.java).let {
+            it.putExtra("code", REQUEST_CODE)
+            it.putExtra("count", 10)
+            PendingIntent.getBroadcast(binding.root.context, REQUEST_CODE, it, 0)
+        }
         Log.d("alarm",App.prefs.getString("alarmONOFF","OFF"))
 
         binding.alarmSwitch.isChecked = App.prefs.getString("alarmONOFF","OFF")!="OFF"
         if(binding.alarmSwitch.isChecked){
             binding.alarmTimeGroup.visibility=View.VISIBLE
+            binding.alarmOnTimeTextview.text=App.prefs.getString("alarmtime","없음")
         }
         else{
             binding.alarmTimeGroup.visibility=View.INVISIBLE
@@ -58,64 +63,60 @@ class SettingFragment : Fragment() {
         binding.alarmSwitch.setOnCheckedChangeListener { compoundButton, b ->
             if(b){
                 binding.alarmTimeGroup.visibility=View.VISIBLE
+                binding.alarmOnTimeTextview.text=App.prefs.getString("alarmtime","없음")
                 App.prefs.setString("alarmONOFF","ON")
 
             }
             else{
                 binding.alarmTimeGroup.visibility=View.INVISIBLE
                 App.prefs.setString("alarmONOFF","OFF")
-                cancelAlarm()
+                App.prefs.setString("alarmtime","없음")
+                alarmManager.cancel(pendingIntent)
             }
         }
 
         binding.alarmSetBtn.setOnClickListener {
             hour=binding.alarmTimepicker.hour
             min=binding.alarmTimepicker.minute
-            setAlarm(hour,min)
+            val calendar=Calendar.getInstance().apply {
+                timeInMillis=System.currentTimeMillis()
+                set(Calendar.HOUR_OF_DAY, hour)
+                set(Calendar.MINUTE, min)
+            }
+            alarmManager.setInexactRepeating(
+                AlarmManager.RTC_WAKEUP,
+                calendar.timeInMillis,
+                AlarmManager.INTERVAL_DAY,
+                pendingIntent
+            )
+            var alarmtime:String
+            if(hour>=12){
+                if(hour==12){
+                    alarmtime="오후 "+hour.toString()+"시 "+min.toString()+"분"
+                }
+                else {
+                    hour %= 12
+                    alarmtime = "오후 " + hour.toString() + "시 " + min.toString() + "분"
+                }
+            }
+            else{
+                alarmtime="오전 "+hour.toString()+"시 "+min.toString()+"분"
+
+            }
+            var alarm=
+            App.prefs.setString("alarmtime", alarmtime)
             Log.d("alarm",hour.toString()+min.toString())
+            binding.alarmOnTimeTextview.text=App.prefs.getString("alarmtime","없음")
+
             Toast.makeText(requireContext(), "알람 설정이 완료되었습니다 .", Toast.LENGTH_SHORT).show()
 
         }
 
+        return binding.root
     }
+
     fun showGoalDialog(){
         val goalDialog= GoalDialog()
         goalDialog.show(requireFragmentManager(),"routineDelDialog")
     }
-    private fun cancelAlarm() {
-        val receiverIntent = Intent(requireContext(), AlarmReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(requireContext(), 0, receiverIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
-        alarmManager?.cancel(pendingIntent)
-    }
-
-    private fun setAlarm(hour: Int, minute: Int) {
-        //옵션값에 따라서, 푸시 설정이 되지 않을 수 있도록 함
-        //AlarmReceiver에 값 전달
-        val receiverIntent = Intent(requireContext(), AlarmReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(requireContext(), 0, receiverIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
-
-        //alarm 등록 전, 이전 push cancel
-        alarmManager?.cancel(pendingIntent)
-
-        // Set the alarm to start at time and minute
-
-        val calendar: Calendar = Calendar.getInstance().apply {
-            timeInMillis = System.currentTimeMillis()
-            set(Calendar.HOUR_OF_DAY, hour)
-            set(Calendar.MINUTE, minute)
-            set(Calendar.SECOND, 0)
-
-            if (timeInMillis <= System.currentTimeMillis()) {
-                add(Calendar.DAY_OF_MONTH, 1)
-            }
-        }
-
-        alarmManager?.setRepeating(
-            AlarmManager.RTC_WAKEUP,
-            calendar.timeInMillis,
-            AlarmManager.INTERVAL_DAY,
-            pendingIntent
-        )
-    }
-
 }
